@@ -34,12 +34,12 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px 10px;
+            padding: 20px;
         }
 
         .container {
             width: 100%;
-            max-width: 750px;
+            max-width: 650px;
             background: var(--card-bg);
             border-radius: var(--border-radius);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -50,7 +50,7 @@
         .header {
             background-color: var(--primary-color);
             color: #ffffff;
-            padding: 25px 20px;
+            padding: 30px 20px;
             text-align: center;
         }
 
@@ -68,16 +68,165 @@
             font-weight: 300;
         }
 
-        .iframe-container {
-            width: 100%;
-            height: 850px;
-            border: none;
+        form {
+            padding: 30px 25px;
         }
 
-        iframe {
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--primary-color);
+        }
+
+        .form-group input[type="text"],
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group select:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 5px rgba(64, 83, 76, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            background: #f0f4f2;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .sub-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .radio-option-group {
+            background: #fafafa;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        .radio-option-group p {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .radio-options {
+            display: flex;
+            gap: 12px;
+        }
+
+        .radio-options label {
+            font-size: 0.85rem;
+            font-weight: 400;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 0;
+            color: #333;
+        }
+
+        .badge-optional {
+            font-size: 0.75rem;
+            background: #eee;
+            color: #666;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+            font-weight: normal;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .modal-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .btn-close {
+            background: var(--primary-color);
+            color: white;
             border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 480px) {
+            .sub-group {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -89,10 +238,133 @@
             <p>Konfirmasi Fitting & Penerimaan Seragam Karyawan</p>
         </div>
 
-        <div class="iframe-container">
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfSDyFATkJ-x4uZT4lTWcdAVqcQQ7Xst8si91Q9NqClfkEXZw/viewform?embedded=true">Memuat form...</iframe>
+        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+        <form id="uniformForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfSDyFATkJ-x4uZT4lTWcdAVqcQQ7Xst8si91Q9NqClfkEXZw/formResponse" method="POST" target="hidden_iframe">
+            <!-- 1. Nama -->
+            <div class="form-group">
+                <label for="nama">1. Nama Lengkap</label>
+                <input type="text" id="nama" name="entry.2005620554" placeholder="Masukkan nama Anda" required>
+            </div>
+
+            <!-- 2. Department -->
+            <div class="form-group">
+                <label for="department">2. Department</label>
+                <select id="department" name="entry.104554832" required>
+                    <option value="" disabled selected>Pilih Department</option>
+                    <option value="Front Office">Front Office</option>
+                    <option value="Housekeeping">Housekeeping</option>
+                    <option value="Food & Beverage">Food & Beverage</option>
+                    <option value="Kitchen">Kitchen</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="HR / Admin">HR / Admin</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+            </div>
+
+            <!-- 3. Size Baju -->
+            <div class="section-title">3. Size Baju</div>
+            <div class="sub-group">
+                <div class="radio-option-group">
+                    <p>a. Panjang Baju</p>
+                    <div class="radio-options">
+                        <label><input type="radio" name="entry.1065046570" value="Sesuai" required> Sesuai</label>
+                        <label><input type="radio" name="entry.1065046570" value="Tidak Sesuai"> Tidak Sesuai</label>
+                    </div>
+                </div>
+                <div class="radio-option-group">
+                    <p>b. Lebar Baju</p>
+                    <div class="radio-options">
+                        <label><input type="radio" name="entry.1166974658" value="Sesuai" required> Sesuai</label>
+                        <label><input type="radio" name="entry.1166974658" value="Tidak Sesuai"> Tidak Sesuai</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Size Celana -->
+            <div class="section-title">4. Size Celana</div>
+            <div class="sub-group">
+                <div class="radio-option-group">
+                    <p>a. Panjang Celana</p>
+                    <div class="radio-options">
+                        <label><input type="radio" name="entry.839337160" value="Sesuai" required> Sesuai</label>
+                        <label><input type="radio" name="entry.839337160" value="Tidak Sesuai"> Tidak Sesuai</label>
+                    </div>
+                </div>
+                <div class="radio-option-group">
+                    <p>b. Lebar Celana</p>
+                    <div class="radio-options">
+                        <label><input type="radio" name="entry.2085810243" value="Sesuai" required> Sesuai</label>
+                        <label><input type="radio" name="entry.2085810243" value="Tidak Sesuai"> Tidak Sesuai</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Belt (Opsional) -->
+            <div class="section-title">5. Belt <span class="badge-optional">Opsional</span></div>
+            <div class="radio-option-group">
+                <p>a. Lebar / Panjang Belt</p>
+                <div class="radio-options">
+                    <label><input type="radio" name="entry.1054320987" value="Sesuai"> Sesuai</label>
+                    <label><input type="radio" name="entry.1054320987" value="Tidak Sesuai"> Tidak Sesuai</label>
+                    <label><input type="radio" name="entry.1054320987" value="Tidak Menggunakan" checked> N/A</label>
+                </div>
+            </div>
+
+            <!-- 6. Apron -->
+            <div class="section-title">6. Apron</div>
+            <div class="sub-group">
+                <div class="radio-option-group">
+                    <p>a. Panjang Apron</p>
+                    <div class="radio-options">
+                        <label><input type="radio" name="entry.1190429780" value="Sesuai" required> Sesuai</label>
+                        <label><input type="radio" name="entry.1190429780" value="Tidak Sesuai"> Tidak Sesuai</label>
+                    </div>
+                </div>
+                <div class="radio-option-group">
+                    <p>b. Lebar Apron</p>
+                    <div class="radio-options">
+                        <label><input type="radio" name="entry.1221319080" value="Sesuai" required> Sesuai</label>
+                        <label><input type="radio" name="entry.1221319080" value="Tidak Sesuai"> Tidak Sesuai</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="btnSubmit">Kirim Konfirmasi</button>
+        </form>
+    </div>
+
+    <!-- Modal Popup Konfirmasi Sukses -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <h3>Terima Kasih!</h3>
+            <p>Data konfirmasi ukuran uniform Anda telah berhasil tersimpan di sistem Google Form.</p>
+            <button class="btn-close" onclick="closeModal()">Tutup</button>
         </div>
     </div>
 
+    <script>
+        let submitted = false;
+        const form = document.getElementById('uniformForm');
+        const iframe = document.getElementById('hidden_iframe');
+
+        form.addEventListener('submit', function() {
+            submitted = true;
+            document.getElementById('btnSubmit').innerText = 'Mengirim...';
+        });
+
+        iframe.addEventListener('load', function() {
+            if (submitted) {
+                document.getElementById('successModal').style.display = 'flex';
+                document.getElementById('btnSubmit').innerText = 'Kirim Konfirmasi';
+                form.reset();
+                submitted = false;
+            }
+        });
+
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
